@@ -2,8 +2,6 @@ package com.ecuador.turistico.payload.response;
 
 import java.util.List;
 
-import com.ecuador.turistico.model.Menu;
-
 public class JwtResponse {
 	private String token;
 	private String type = "Bearer";
@@ -11,15 +9,13 @@ public class JwtResponse {
 	private String username;
 	private String email;
 	private List<String> roles;
-	private List<Menu> menus;
 
-	public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles, List<Menu> menus) {
+	public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
-		this.menus= menus;
 	}
 
 	public String getAccessToken() {
@@ -64,13 +60,5 @@ public class JwtResponse {
 
 	public List<String> getRoles() {
 		return roles;
-	}
-
-	public List<Menu> getMenus() {
-		return menus;
-	}
-
-	public void setMenus(List<Menu> menus) {
-		this.menus = menus;
 	}
 }

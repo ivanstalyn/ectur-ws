@@ -13,8 +13,9 @@ public class PaqueteTurisiticoRequest implements Serializable{
 	   private static final long serialVersionUID = 1L;
 	    private String nombre;
 	    private String descripcion;  
-	    private int costo;
+	    private Double costo;
 		private String estado;
+		private String foto;
 		private Date fechaInicio;
 		private Date fechaFin;
 		public String getNombre() {
@@ -29,10 +30,10 @@ public class PaqueteTurisiticoRequest implements Serializable{
 		public void setDescripcion(String descripcion) {
 			this.descripcion = descripcion;
 		}
-		public int getCosto() {
+		public Double getCosto() {
 			return costo;
 		}
-		public void setCosto(int costo) {
+		public void setCosto(Double costo) {
 			this.costo = costo;
 		}
 		public String getEstado() {
@@ -52,5 +53,11 @@ public class PaqueteTurisiticoRequest implements Serializable{
 		}
 		public void setFechaFin(Date fechaFin) {
 			this.fechaFin = fechaFin;
+		}
+		public String getFoto() {
+			return foto;
+		}
+		public void setFoto(String foto) {
+			this.foto = foto;
 		}
 }

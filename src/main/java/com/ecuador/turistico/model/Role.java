@@ -26,9 +26,6 @@ public class Role {
 	@Column(length = 20)
 	private ERole name;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "rol")
-	private Set<Perfil> perfiles;	
 	
 	public Role() {
 
@@ -52,13 +49,5 @@ public class Role {
 
 	public void setName(ERole name) {
 		this.name = name;
-	}
-
-	public Set<Perfil> getPerfiles() {
-		return perfiles;
-	}
-
-	public void setPerfiles(Set<Perfil> perfiles) {
-		this.perfiles = perfiles;
 	}
 }

@@ -1,9 +1,12 @@
 package com.ecuador.turistico.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -76,6 +80,10 @@ public class User {
 	private Date fechaNacimiento;
 	
 	
+	@OneToMany(cascade= CascadeType.ALL, mappedBy = "usuario", orphanRemoval = true)
+	private List<RegistroPaqueteTuristico> registroPaquetesTuristicos = new ArrayList<>();
+	
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
@@ -90,10 +98,10 @@ public class User {
 	@Transient
 	private Set<String> role;
 	
-	public User setDatosNuevos(@Size(max = 20) String nombres, @Size(max = 20) String apellidos, @Size(max = 10) String identificacion,
-			@Size(max = 10) String telefono, @NotBlank @Size(max = 50) String email,
-			@NotBlank @Size(max = 120) String password, @NotBlank @Size(max = 20) String username,
-			@NotNull Date fechaNacimiento, Set<Role> roles) {
+	public User setDatosNuevos(String nombres,  String apellidos, String identificacion,
+			 String telefono, String email,
+			 String password, String username,
+			 Date fechaNacimiento, Set<Role> roles) {
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.identificacion = identificacion;
@@ -227,4 +235,13 @@ public class User {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
+
+	public List<RegistroPaqueteTuristico> getRegistroPaquetesTuristicos() {
+		return registroPaquetesTuristicos;
+	}
+
+	public void setRegistroPaquetesTuristicos(List<RegistroPaqueteTuristico> registroPaquetesTuristicos) {
+		this.registroPaquetesTuristicos = registroPaquetesTuristicos;
+	}
+	
 }

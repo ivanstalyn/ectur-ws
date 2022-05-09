@@ -9,10 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.ecuador.turistico.model.Menu;
-import com.ecuador.turistico.model.Perfil;
 import com.ecuador.turistico.model.User;
-import com.ecuador.turistico.model.Menu;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserDetailsImpl implements UserDetails  {
@@ -30,17 +27,16 @@ public class UserDetailsImpl implements UserDetails  {
 
 	private Collection<? extends GrantedAuthority> authorities;
 	
-	private List<Menu> menus_autorizados;
+
 	
 	
 	public UserDetailsImpl(Long id, String username, String email, String password,
-			Collection<? extends GrantedAuthority> authorities, List<Menu> menus) {
+			Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
-		this.menus_autorizados=menus;
 	}
 	
 	public static UserDetailsImpl build(User user) {
@@ -48,9 +44,9 @@ public class UserDetailsImpl implements UserDetails  {
 				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
 				.collect(Collectors.toList());
 		
-		List<List<Perfil>> authorities2 = user.getRoles().stream().map(role-> role.getPerfiles().stream().collect(Collectors.toList())).collect(Collectors.toList());
+		//List<List<Perfil>> authorities2 = user.getRoles().stream().map(role-> role.getPerfiles().stream().collect(Collectors.toList())).collect(Collectors.toList());
 
-		List<Menu> list = authorities2.stream().flatMap(l-> l.stream().map(a->a.getMenu())).collect(Collectors.toList());
+		//List<MenuT> list = authorities2.stream().flatMap(l-> l.stream().map(a->a.getMenu())).collect(Collectors.toList());
 		
 		//list.forEach(me->me.getIdPadre());
 
@@ -59,7 +55,7 @@ public class UserDetailsImpl implements UserDetails  {
 				user.getUsername(), 
 				user.getEmail(),
 				user.getPassword(), 
-				authorities, list);
+				authorities);
 	}
 
 
@@ -132,11 +128,4 @@ public class UserDetailsImpl implements UserDetails  {
 		this.email = email;
 	}
 
-	public List<Menu> getMenus_autorizados() {
-		return menus_autorizados;
-	}
-
-	public void setMenus_autorizados(List<Menu> menus_autorizados) {
-		this.menus_autorizados = menus_autorizados;
-	}
 }
