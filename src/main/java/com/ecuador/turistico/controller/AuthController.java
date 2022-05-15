@@ -1,21 +1,17 @@
 package com.ecuador.turistico.controller;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,37 +19,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecuador.turistico.jwt.JwtUtils;
-import com.ecuador.turistico.model.ERole;
-import com.ecuador.turistico.model.Role;
 import com.ecuador.turistico.model.User;
-import com.ecuador.turistico.payload.request.LoginRequest;
 import com.ecuador.turistico.payload.request.SignupRequest;
-import com.ecuador.turistico.payload.response.JwtResponse;
 import com.ecuador.turistico.payload.response.MessageResponse;
-import com.ecuador.turistico.repository.RoleRepository;
+//import com.ecuador.turistico.repository.RoleRepository;
 import com.ecuador.turistico.repository.UserRepository;
-import com.ecuador.turistico.security.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 	
-	@Autowired
-	AuthenticationManager authenticationManager;
+//	@Autowired
+//	AuthenticationManager authenticationManager;
 
 	@Autowired
 	UserRepository userRepository;
 
-	@Autowired
-	RoleRepository roleRepository;
+//	@Autowired
+//	RoleRepository roleRepository;
 
-	@Autowired
-	PasswordEncoder encoder;
+//	@Autowired
+//	PasswordEncoder encoder;
 
-	@Autowired
-	JwtUtils jwtUtils;
+
 	
 	@PostConstruct
 	void init(){
@@ -61,27 +50,27 @@ public class AuthController {
 	}
 
 
-	@PostMapping("/signin")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
-		
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
-		
-		List<String> roles = userDetails.getAuthorities().stream()
-				.map(item -> item.getAuthority())
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok(new JwtResponse(jwt, 
-												 userDetails.getId(), 
-												 userDetails.getUsername(), 
-												 userDetails.getEmail(), 
-												 roles));
-	}
+//	@PostMapping("/signin")
+//	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+//
+//		Authentication authentication = authenticationManager.authenticate(
+//				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+//
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+//		String jwt = jwtUtils.generateJwtToken(authentication);
+//		
+//		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
+//		
+//		List<String> roles = userDetails.getAuthorities().stream()
+//				.map(item -> item.getAuthority())
+//				.collect(Collectors.toList());
+//
+//		return ResponseEntity.ok(new JwtResponse(jwt, 
+//												 userDetails.getId(), 
+//												 userDetails.getUsername(), 
+//												 userDetails.getEmail(), 
+//												 roles));
+//	}
 	
 
 	@PostMapping("/signup")
@@ -104,42 +93,42 @@ public class AuthController {
 				signUpRequest.getIdentificacion(),
 				signUpRequest.getTelefono(),
 				signUpRequest.getEmail(),
-				encoder.encode(signUpRequest.getPassword()),
+				null,
+//				encoder.encode(signUpRequest.getPassword()),
 				signUpRequest.getUsername(), 
-			    signUpRequest.getFechaNacimiento(), 
-			    null);
+			    signUpRequest.getFechaNacimiento());
 
-		Set<String> strRoles = signUpRequest.getRole();
-		Set<Role> roles = new HashSet<>();
-
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
-
-					break;
-				case "mod":
-					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(modRole);
-
-					break;
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(userRole);
-				}
-			});
-		}
-
-		user.setRoles(roles);
+//		Set<String> strRoles = signUpRequest.getRole();
+//		Set<Role> roles = new HashSet<>();
+//
+//		if (strRoles == null) {
+//			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+//					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//			roles.add(userRole);
+//		} else {
+//			strRoles.forEach(role -> {
+//				switch (role) {
+//				case "admin":
+//					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+//							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//					roles.add(adminRole);
+//
+//					break;
+//				case "mod":
+//					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+//							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//					roles.add(modRole);
+//
+//					break;
+//				default:
+//					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+//							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//					roles.add(userRole);
+//				}
+//			});
+//		}
+//
+//		user.setRoles(roles);
 		userRepository.save(user);
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
@@ -164,10 +153,10 @@ public class AuthController {
 				signUpRequest.getIdentificacion(),
 				signUpRequest.getTelefono(),
 				signUpRequest.getEmail(),
-				encoder.encode(signUpRequest.getPassword()),
+				null,
+				//encoder.encode(signUpRequest.getPassword()),
 				signUpRequest.getUsername(), 
-			    signUpRequest.getFechaNacimiento(), 
-			    null);
+			    signUpRequest.getFechaNacimiento());
 			userRepository.save(usuario);
 			return ResponseEntity.ok(new MessageResponse("User updated successfully!"));
 		}

@@ -2,22 +2,15 @@ package com.ecuador.turistico.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -84,16 +77,7 @@ public class User {
 	private List<RegistroPaqueteTuristico> registroPaquetesTuristicos = new ArrayList<>();
 	
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
-	
-	
-	@Enumerated(EnumType.STRING)
-	@Column(length=20)
-    private EGenero genero;
+
 	
 	@Transient
 	private Set<String> role;
@@ -101,7 +85,7 @@ public class User {
 	public User setDatosNuevos(String nombres,  String apellidos, String identificacion,
 			 String telefono, String email,
 			 String password, String username,
-			 Date fechaNacimiento, Set<Role> roles) {
+			 Date fechaNacimiento) {
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.identificacion = identificacion;
@@ -110,7 +94,6 @@ public class User {
 		this.password = password;
 		this.username = username;
 		this.fechaNacimiento = fechaNacimiento;
-		this.roles = roles;
 		return this;
 	}
 
@@ -180,28 +163,12 @@ public class User {
 		this.username = username;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
 	public String getIdentificacion() {
 		return identificacion;
 	}
 
 	public void setIdentificacion(String identificacion) {
 		this.identificacion = identificacion;
-	}
-
-	public EGenero getGenero() {
-		return genero;
-	}
-
-	public void setGenero(EGenero genero) {
-		this.genero = genero;
 	}
 
 	public Set<String> getRole() {
