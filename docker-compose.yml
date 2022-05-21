@@ -2,9 +2,9 @@ version: '2'
 
 services:
   app:
-    image: 'docker-spring-boot-ptta:latest'
+    image: 'fherpie/wsturistico:latest'
     ports:
-      - "9001:9001"
+      - "8080:8080"
     build:
       context: .
     container_name: app

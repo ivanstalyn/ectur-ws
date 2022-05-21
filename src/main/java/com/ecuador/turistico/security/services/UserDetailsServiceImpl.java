@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ecuador.turistico.repository.UserRepository;
+import com.ecuador.turistico.repository.UsuarioRepository;
 
 @Service
 public class UserDetailsServiceImpl {
 
 //implements UserDetailsService {
 	@Autowired
-	UserRepository userRepository;
+	UsuarioRepository userRepository;
 
 //	@Override
 //	@Transactional
