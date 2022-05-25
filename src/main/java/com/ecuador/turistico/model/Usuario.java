@@ -185,7 +185,10 @@ public class Usuario implements Serializable{
 	}
 
 	public String getFoto() {
-		return foto;
+		if (foto.isEmpty())
+			return "http://ectur.php.ec/imagenes/usuarios/user.png";
+		else
+			return foto;
 	}
 
 	public void setFoto(String foto) {
