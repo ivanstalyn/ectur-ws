@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,6 +24,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -81,6 +85,11 @@ public class Usuario implements Serializable{
 	@Column(name = "foto")
 	private String foto;
 	
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Type(type = "org.hibernate.type.ImageType")
+	private byte[] image;
+	
 	@NotNull
 	@Size(max = 120)
 	@Column(name = "password")
@@ -133,7 +142,7 @@ public class Usuario implements Serializable{
 		this.rol=rol;
 		this.genero= genero;
 		this.empresa= empresa;
-		this.foto=foto;
+		this.image=foto!=null ? foto.getBytes(): null;
 		return this;
 	}
 
@@ -186,7 +195,7 @@ public class Usuario implements Serializable{
 	}
 
 	public String getFoto() {
-		if (foto.isEmpty())
+		if (foto== null || foto.isEmpty())
 			return "http://ectur.php.ec/imagenes/usuarios/user.png";
 		else
 			return foto;

@@ -35,18 +35,17 @@ import com.ecuador.turistico.repository.UsuarioRepository;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-
 	@Autowired
 	UsuarioRepository usuarioRepository;
 
 	@PostConstruct
-	void init(){
-		//System.out.println("Pasando por el postconstructor del controlador de AUTH");
+	void init() {
+		// System.out.println("Pasando por el postconstructor del controlador de AUTH");
 	}
 
-	@GetMapping("/usuario/{username}")
-	public ResponseEntity<Usuario> getUsuario(@PathVariable("username") String username) {
-		Optional<Usuario> usuario = usuarioRepository.findByUsername(username);
+	@GetMapping("/usuario/{userId}")
+	public ResponseEntity<Usuario> getUsuario(@PathVariable("userId") Integer userId) {
+		Optional<Usuario> usuario = usuarioRepository.findById(userId);
 		if (usuario.isPresent()) {
 			return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
 		} else {
@@ -55,65 +54,56 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/signin")
-	public ResponseEntity<?> signinUsuario(@Valid @RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<Usuario> signinUsuario(@Valid @RequestBody LoginRequest loginRequest) {
 
-		Optional<Usuario> usuario= usuarioRepository.findByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
-		if(usuario.isPresent()) 
-		{
-			return ResponseEntity.ok(new MessageResponse("Usuario Logged!"));
+		Optional<Usuario> usuario = usuarioRepository.findByUsernameAndPassword(loginRequest.getUsername(),
+				loginRequest.getPassword());
+		if (usuario.isPresent()) {
+			usuario.get().setPassword(null);
+			usuario.get().setFoto(usuario.get().getImage() != null ? "http://ectur.php.ec/imagenes/usuarios/"+usuario.get().getId()+""+".jpg" : null);
+			usuario.get().setImage(null);
+			return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Usuario no logged!"));
 	}
-	
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUsuario(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (usuarioRepository.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Usuarioname is already taken!"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Usuarioname is already taken!"));
 		}
 
 		if (usuarioRepository.existsByEmail(signUpRequest.getEmail())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Email is already in use!"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
 		}
 
 		// Create new usuario's account
-		Usuario usuario = new Usuario().setDatosNuevos(	signUpRequest.getNombres(),
-				signUpRequest.getApellidos(),
-				signUpRequest.getIdentificacion(),
-				signUpRequest.getTelefono(),
-				signUpRequest.getEmail(),
-				signUpRequest.getPassword(),
-				signUpRequest.getUsername(), 
-			    signUpRequest.getFechaNacimiento(), LocalDateTime.now(), signUpRequest.getRol(), signUpRequest.getGenero(), signUpRequest.getEmpresa(), signUpRequest.getFoto());
-       try {
-		usuarioRepository.save(usuario);
-       } catch(Exception e) {
-        e.printStackTrace();
-       }
+		Usuario usuario = new Usuario().setDatosNuevos(signUpRequest.getNombres(), signUpRequest.getApellidos(),
+				signUpRequest.getIdentificacion(), signUpRequest.getTelefono(), signUpRequest.getEmail(),
+				signUpRequest.getPassword(), signUpRequest.getUsername(), signUpRequest.getFechaNacimiento(),
+				LocalDateTime.now(), signUpRequest.getRol(), signUpRequest.getGenero(), signUpRequest.getEmpresa(),
+				signUpRequest.getFoto());
+		try {
+			usuarioRepository.save(usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(e.getMessage() + " " + e.getCause(), HttpStatus.BAD_REQUEST);
+		}
 		return ResponseEntity.ok(new MessageResponse("Usuario registered successfully!"));
 	}
-	
 
-	@PutMapping("/actualizarUsuario/{username}")
-	public ResponseEntity<?> ActualizarRegisterUsuario(@Valid @RequestBody SignupRequest signUpRequest, @PathVariable("username") String username) {
-		if (!usuarioRepository.existsByUsername(username)) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Username no exist!"));
+	@PutMapping("/actualizarUsuario/{userId}")
+	public ResponseEntity<?> ActualizarRegisterUsuario(@Valid @RequestBody SignupRequest signUpRequest,
+			@PathVariable("userId") Integer userId) {
+		if (!usuarioRepository.existsById(userId)) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: User no exist!"));
 		}
 
-
-		Optional<Usuario> usuario= usuarioRepository.findByUsername(username);
-		Usuario usuario2=null;
-		if(usuario.get() != null) 
-		{
-			usuario2=usuario.get();
+		Optional<Usuario> usuario = usuarioRepository.findById(userId);
+		Usuario usuario2 = null;
+		if (usuario.get() != null) {
+			usuario2 = usuario.get();
 			usuario2.setApellidos(signUpRequest.getApellidos());
 			usuario2.setPassword(signUpRequest.getPassword());
 			usuario2.setFechaNacimiento(signUpRequest.getFechaNacimiento());
@@ -125,15 +115,21 @@ public class UsuarioController {
 			usuario2.setEmpresa(signUpRequest.getEmpresa());
 			usuario2.setGenero(signUpRequest.getGenero());
 			usuario2.setRol(signUpRequest.getRol());
-			usuario2.setFoto(signUpRequest.getFoto());
-			usuarioRepository.save(usuario2);
-			return ResponseEntity.ok(new MessageResponse("Usuario updated successfully!"));
+			usuario2.setImage(signUpRequest.getFoto() != null ? signUpRequest.getFoto().getBytes() : null);
+			try {
+				usuarioRepository.save(usuario2);
+				usuario.get().setFoto(signUpRequest.getFoto() != null ? "http://ectur.php.ec/imagenes/usuarios/"+usuario2.getId()+""+".jpg" : null);
+				usuario2.setImage(null);
+				return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<>(e.getMessage() + " " + e.getCause(), HttpStatus.BAD_REQUEST);
+
+			}
+
 		}
-		return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Usuarioname no exist!"));
-	
+		return ResponseEntity.badRequest().body(new MessageResponse("Error: Usuarioname no exist!"));
+
 	}
-	
 
 }
