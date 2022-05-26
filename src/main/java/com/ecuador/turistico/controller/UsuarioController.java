@@ -90,7 +90,7 @@ public class UsuarioController {
 				signUpRequest.getEmail(),
 				signUpRequest.getPassword(),
 				signUpRequest.getUsername(), 
-			    signUpRequest.getFechaNacimiento(), LocalDateTime.now(), signUpRequest.getRol(), signUpRequest.getGenero(), signUpRequest.getEmpresa());
+			    signUpRequest.getFechaNacimiento(), LocalDateTime.now(), signUpRequest.getRol(), signUpRequest.getGenero(), signUpRequest.getEmpresa(), signUpRequest.getFoto());
        try {
 		usuarioRepository.save(usuario);
        } catch(Exception e) {
@@ -125,6 +125,7 @@ public class UsuarioController {
 			usuario2.setEmpresa(signUpRequest.getEmpresa());
 			usuario2.setGenero(signUpRequest.getGenero());
 			usuario2.setRol(signUpRequest.getRol());
+			usuario2.setFoto(signUpRequest.getFoto());
 			usuarioRepository.save(usuario2);
 			return ResponseEntity.ok(new MessageResponse("Usuario updated successfully!"));
 		}

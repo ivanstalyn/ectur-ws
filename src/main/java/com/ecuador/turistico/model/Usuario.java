@@ -120,7 +120,7 @@ public class Usuario implements Serializable{
 	private List<Solicitud>listaSolicitudes = new ArrayList<Solicitud>();
 
 	public Usuario setDatosNuevos(String nombres2, String apellidos2, String identificacion2, String telefono2,
-			String email2, String password2, String username2, Date fechaNacimiento2, LocalDateTime localDateTime, DetalleCatalogo rol, DetalleCatalogo genero, Empresa empresa) {
+			String email2, String password2, String username2, Date fechaNacimiento2, LocalDateTime localDateTime, DetalleCatalogo rol, DetalleCatalogo genero, Empresa empresa, String foto) {
 		this.nombres=nombres2;
 		this.apellidos=apellidos2;
 		this.identificacion=identificacion2;
@@ -133,6 +133,7 @@ public class Usuario implements Serializable{
 		this.rol=rol;
 		this.genero= genero;
 		this.empresa= empresa;
+		this.foto=foto;
 		return this;
 	}
 

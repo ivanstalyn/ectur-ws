@@ -46,6 +46,7 @@ public class SignupRequest implements Serializable{
 		private DetalleCatalogo rol;
 		private DetalleCatalogo genero;
 		private Empresa empresa;
+		private String foto;
 		public String getUsername() {
 			return username;
 		}
