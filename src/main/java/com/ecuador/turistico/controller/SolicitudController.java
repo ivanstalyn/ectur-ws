@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecuador.turistico.model.Solicitud;
 import com.ecuador.turistico.model.Usuario;
+import com.ecuador.turistico.payload.response.MessageResponse;
+import com.ecuador.turistico.payload.response.SolResponse;
 import com.ecuador.turistico.repository.SolicitudRepository;
 import com.ecuador.turistico.repository.UsuarioRepository;
 
@@ -33,7 +36,6 @@ public class SolicitudController {
 	
 	@Autowired
 	UsuarioRepository usuarioRepository;
-	
 	
 	@GetMapping("/solicitud")
 	public ResponseEntity<List<Solicitud>> getAll() {
@@ -63,18 +65,27 @@ public class SolicitudController {
 	}
 	
 	@GetMapping("/solicitud/{usuarioId}")
-	public ResponseEntity<List<Solicitud>> solicitudxUsuario(@PathVariable("usuarioId") Integer id) {
+	public ResponseEntity<MessageResponse> solicitudxUsuario(@PathVariable("usuarioId") Integer id) {
+		MessageResponse mensaje= new MessageResponse();
 		try {
 			Optional<Usuario> user= usuarioRepository.findById(id);
-			if(user.get()!=null) {
-				List<Solicitud> solicitud= solicitudRepository.fetchSolicitudByUsuario(user.get());
-				return new ResponseEntity<>(solicitud, HttpStatus.OK);
+			if(!user.isEmpty()) {
+				List<SolResponse> solicitud =  solicitudRepository.fetchSolicitudByUsuario(user.get()).stream().map(sol-> 
+				  new SolResponse(sol.getFechaInicioEvento(), sol.getFechaFinalEvento(), sol.getProducto().getId(), sol.getProducto().getNombre(), sol.getProducto().getDescripcion(), sol.getProducto().getPrecio())
+			).collect(Collectors.toList());
+				
+				if (solicitud.isEmpty()) {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+				mensaje.setRespuestaSol(solicitud);
+				return new ResponseEntity<>(mensaje, HttpStatus.OK);
 			}else {
-				return new ResponseEntity<>(null , HttpStatus.NOT_FOUND);
+				mensaje.setMessage("Usuario no Encontrado");
+				return new ResponseEntity<>(mensaje , HttpStatus.NOT_FOUND);
 			}
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			mensaje.setMessage(e.getCause()+" "+e.getMessage());
+			return new ResponseEntity<>(mensaje, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
 }

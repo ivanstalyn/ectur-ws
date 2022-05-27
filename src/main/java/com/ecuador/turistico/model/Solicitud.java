@@ -73,10 +73,12 @@ public class Solicitud  implements Serializable  {
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "estado_id")
+	@JsonIgnore
 	private DetalleCatalogo estado;
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
+	@JsonIgnore
 	private Usuario usuario;
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
