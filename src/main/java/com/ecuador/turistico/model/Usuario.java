@@ -109,22 +109,22 @@ public class Usuario implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaCreacion;
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "rol_id")
 	@JsonIgnore
 	private DetalleCatalogo rol;
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "genero_id")
 	@JsonIgnore
 	private DetalleCatalogo genero;
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "empresa_id")
 	@JsonIgnore
 	private Empresa empresa;
 	
-	@OneToMany(cascade = CascadeType.REFRESH,mappedBy = "usuario", fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.DETACH,mappedBy = "usuario", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Solicitud>listaSolicitudes = new ArrayList<Solicitud>();
 

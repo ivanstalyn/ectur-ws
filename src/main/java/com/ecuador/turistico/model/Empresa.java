@@ -43,6 +43,16 @@ public class Empresa implements Serializable{
 	@JsonIgnore
 	private List<Producto>listaProductos = new ArrayList<Producto>();
 
+	 public Empresa() {
+	    }
+	
+	
+	
+	public Empresa(int id) {
+		super();
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}

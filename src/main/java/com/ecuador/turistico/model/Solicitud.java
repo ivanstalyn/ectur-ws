@@ -71,17 +71,16 @@ public class Solicitud  implements Serializable  {
 	private Date fechaActualizacion;
 	
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "estado_id")
 	@JsonIgnore
 	private DetalleCatalogo estado;
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
-	@JsonIgnore
 	private Usuario usuario;
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "producto_id")
 	private Producto producto;
 

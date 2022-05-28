@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecuador.turistico.model.Empresa;
 import com.ecuador.turistico.model.Usuario;
 import com.ecuador.turistico.payload.request.LoginRequest;
 import com.ecuador.turistico.payload.request.SignupRequest;
 import com.ecuador.turistico.payload.response.MessageResponse;
+import com.ecuador.turistico.repository.DetalleCatalogoRepository;
 //import com.ecuador.turistico.repository.RoleRepository;
 import com.ecuador.turistico.repository.UsuarioRepository;
 
@@ -37,6 +39,10 @@ public class UsuarioController {
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
+	
+	
+	@Autowired
+	DetalleCatalogoRepository detalleCatalogoRepository;
 
 	@PostConstruct
 	void init() {
@@ -70,6 +76,10 @@ public class UsuarioController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUsuario(@Valid @RequestBody SignupRequest signUpRequest) {
+		
+		//Empresa ;1
+		//Rol 2
+		//Genero Envia
 		if (usuarioRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Usuarioname is already taken!"));
 		}

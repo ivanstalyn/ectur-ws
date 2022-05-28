@@ -2,10 +2,13 @@ package com.ecuador.turistico.payload.response;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.Data;
 
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class MessageResponse {
 	
 	

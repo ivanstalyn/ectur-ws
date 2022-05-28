@@ -13,9 +13,10 @@ public class SolResponse {
 	private String nombreProducto;
 	private String descripcionProducto;
 	private Double precioProducto;
+	private String message;
 	
 	public SolResponse(Date fechaInicioEvento, Date fechaFinalEvento, int idProducto, String nombreProducto,
-			String descripcionProducto, Double precioProducto) {
+			String descripcionProducto, Double precioProducto, String message) {
 		super();
 		this.fechaInicioEvento = fechaInicioEvento;
 		this.fechaFinalEvento = fechaFinalEvento;
@@ -23,6 +24,7 @@ public class SolResponse {
 		this.nombreProducto = nombreProducto;
 		this.descripcionProducto = descripcionProducto;
 		this.precioProducto = precioProducto;
+		this.message= message;
 	}
 
 	

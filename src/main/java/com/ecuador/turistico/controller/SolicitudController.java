@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecuador.turistico.model.DetalleCatalogo;
 import com.ecuador.turistico.model.Solicitud;
 import com.ecuador.turistico.model.Usuario;
 import com.ecuador.turistico.payload.response.MessageResponse;
@@ -56,6 +57,7 @@ public class SolicitudController {
 	@PostMapping("/solicitud")
 	public ResponseEntity<Solicitud> solicitud(@RequestBody Solicitud solicitudRequest) {
 		try {
+			//solicitudRequest.setEstado(new DetalleCatalogo());
 			solicitudRequest.setFechaCreacion(new Date());
 			return new ResponseEntity<>(solicitudRepository.save(solicitudRequest) , HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -71,7 +73,7 @@ public class SolicitudController {
 			Optional<Usuario> user= usuarioRepository.findById(id);
 			if(!user.isEmpty()) {
 				List<SolResponse> solicitud =  solicitudRepository.fetchSolicitudByUsuario(user.get()).stream().map(sol-> 
-				  new SolResponse(sol.getFechaInicioEvento(), sol.getFechaFinalEvento(), sol.getProducto().getId(), sol.getProducto().getNombre(), sol.getProducto().getDescripcion(), sol.getProducto().getPrecio())
+				  new SolResponse(sol.getFechaInicioEvento(), sol.getFechaFinalEvento(), sol.getProducto().getId(), sol.getProducto().getNombre(), sol.getProducto().getDescripcion(), sol.getProducto().getPrecio(), sol.getMensaje())
 			).collect(Collectors.toList());
 				
 				if (solicitud.isEmpty()) {

@@ -21,6 +21,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +37,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "producto")
-
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Producto implements Serializable{	
 	
 	/**
