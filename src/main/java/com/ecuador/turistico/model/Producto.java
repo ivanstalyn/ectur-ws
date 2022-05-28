@@ -30,8 +30,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -83,10 +81,77 @@ public class Producto implements Serializable{
 	@OneToMany(cascade = CascadeType.REFRESH,mappedBy = "producto", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Solicitud>listaSolicitudes = new ArrayList<Solicitud>();
-	
-	
-	
-	
 
+	public String getNombre() {
+		return nombre;
+	}
 
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Double precio) {
+		this.precio = precio;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	public Date getFechaInicioEvento() {
+		return fechaInicioEvento;
+	}
+
+	public void setFechaInicioEvento(Date fechaInicioEvento) {
+		this.fechaInicioEvento = fechaInicioEvento;
+	}
+
+	public Date getFechaFinalEvento() {
+		return fechaFinalEvento;
+	}
+
+	public void setFechaFinalEvento(Date fechaFinalEvento) {
+		this.fechaFinalEvento = fechaFinalEvento;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public List<Solicitud> getListaSolicitudes() {
+		return listaSolicitudes;
+	}
+
+	public void setListaSolicitudes(List<Solicitud> listaSolicitudes) {
+		this.listaSolicitudes = listaSolicitudes;
+	}
+	
 }

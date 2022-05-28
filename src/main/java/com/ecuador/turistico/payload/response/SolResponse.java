@@ -4,7 +4,7 @@ import java.util.Date;
 
 import lombok.Data;
 
-@Data
+
 public class SolResponse {
 
 	private Date fechaInicioEvento;
@@ -25,6 +25,62 @@ public class SolResponse {
 		this.descripcionProducto = descripcionProducto;
 		this.precioProducto = precioProducto;
 		this.message= message;
+	}
+
+	public Date getFechaInicioEvento() {
+		return fechaInicioEvento;
+	}
+
+	public void setFechaInicioEvento(Date fechaInicioEvento) {
+		this.fechaInicioEvento = fechaInicioEvento;
+	}
+
+	public Date getFechaFinalEvento() {
+		return fechaFinalEvento;
+	}
+
+	public void setFechaFinalEvento(Date fechaFinalEvento) {
+		this.fechaFinalEvento = fechaFinalEvento;
+	}
+
+	public int getIdProducto() {
+		return idProducto;
+	}
+
+	public void setIdProducto(int idProducto) {
+		this.idProducto = idProducto;
+	}
+
+	public String getNombreProducto() {
+		return nombreProducto;
+	}
+
+	public void setNombreProducto(String nombreProducto) {
+		this.nombreProducto = nombreProducto;
+	}
+
+	public String getDescripcionProducto() {
+		return descripcionProducto;
+	}
+
+	public void setDescripcionProducto(String descripcionProducto) {
+		this.descripcionProducto = descripcionProducto;
+	}
+
+	public Double getPrecioProducto() {
+		return precioProducto;
+	}
+
+	public void setPrecioProducto(Double precioProducto) {
+		this.precioProducto = precioProducto;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	

@@ -24,8 +24,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "catalogo")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -51,6 +49,25 @@ public class Catalogo implements Serializable{
 	public String toString() {
 		return "Catalogo [id=" + id + ", nombre=" + nombre + ", listaDetalleCatalogo=" + listaDetalleCatalogo + "]";
 	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public List<DetalleCatalogo> getListaDetalleCatalogo() {
+		return listaDetalleCatalogo;
+	}
+
+	public void setListaDetalleCatalogo(List<DetalleCatalogo> listaDetalleCatalogo) {
+		this.listaDetalleCatalogo = listaDetalleCatalogo;
+	}
+	
+	
+	
 	
 	
 

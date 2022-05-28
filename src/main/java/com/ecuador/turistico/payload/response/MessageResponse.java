@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 
-@Data
+
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class MessageResponse {
 	
@@ -32,4 +32,15 @@ public class MessageResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	public List<SolResponse> getRespuestaSol() {
+		return respuestaSol;
+	}
+
+	public void setRespuestaSol(List<SolResponse> respuestaSol) {
+		this.respuestaSol = respuestaSol;
+	}
+	
+	
+	
 }

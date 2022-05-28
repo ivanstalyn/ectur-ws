@@ -27,8 +27,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "detalle_catalogo")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -71,6 +69,66 @@ public class DetalleCatalogo implements Serializable{
 		return "DetalleCatalogo [id=" + id + ", nombre=" + nombre + ", listaUsuariosPorRol=" + listaUsuariosPorRol
 				+ ", listaUsuariosPorGenero=" + listaUsuariosPorGenero + ", listaSolicitudPorEstado="
 				+ listaSolicitudPorEstado + ", catalogo=" + catalogo + "]";
+	}
+
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+
+	public List<Usuario> getListaUsuariosPorRol() {
+		return listaUsuariosPorRol;
+	}
+
+
+
+	public void setListaUsuariosPorRol(List<Usuario> listaUsuariosPorRol) {
+		this.listaUsuariosPorRol = listaUsuariosPorRol;
+	}
+
+
+
+	public List<Usuario> getListaUsuariosPorGenero() {
+		return listaUsuariosPorGenero;
+	}
+
+
+
+	public void setListaUsuariosPorGenero(List<Usuario> listaUsuariosPorGenero) {
+		this.listaUsuariosPorGenero = listaUsuariosPorGenero;
+	}
+
+
+
+	public List<Solicitud> getListaSolicitudPorEstado() {
+		return listaSolicitudPorEstado;
+	}
+
+
+
+	public void setListaSolicitudPorEstado(List<Solicitud> listaSolicitudPorEstado) {
+		this.listaSolicitudPorEstado = listaSolicitudPorEstado;
+	}
+
+
+
+	public Catalogo getCatalogo() {
+		return catalogo;
+	}
+
+
+
+	public void setCatalogo(Catalogo catalogo) {
+		this.catalogo = catalogo;
 	}
 	
 	

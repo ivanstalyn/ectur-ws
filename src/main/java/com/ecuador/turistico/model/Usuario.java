@@ -42,8 +42,7 @@ uniqueConstraints = {
 		@UniqueConstraint(columnNames = "username"),
 		@UniqueConstraint(columnNames = "email") 
 	})
-@Getter
-@Setter
+
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -269,5 +268,11 @@ public class Usuario implements Serializable{
 		this.listaSolicitudes = listaSolicitudes;
 	}
 
-	
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 }

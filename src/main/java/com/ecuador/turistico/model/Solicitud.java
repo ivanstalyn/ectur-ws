@@ -28,8 +28,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "solicitud")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -91,7 +89,61 @@ public class Solicitud  implements Serializable  {
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
-	
-	
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public Date getFechaInicioEvento() {
+		return fechaInicioEvento;
+	}
+
+	public void setFechaInicioEvento(Date fechaInicioEvento) {
+		this.fechaInicioEvento = fechaInicioEvento;
+	}
+
+	public Date getFechaFinalEvento() {
+		return fechaFinalEvento;
+	}
+
+	public void setFechaFinalEvento(Date fechaFinalEvento) {
+		this.fechaFinalEvento = fechaFinalEvento;
+	}
+
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+
+	public DetalleCatalogo getEstado() {
+		return estado;
+	}
+
+	public void setEstado(DetalleCatalogo estado) {
+		this.estado = estado;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
 
 }
