@@ -153,5 +153,15 @@ public class Producto implements Serializable{
 	public void setListaSolicitudes(List<Solicitud> listaSolicitudes) {
 		this.listaSolicitudes = listaSolicitudes;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
 	
 }

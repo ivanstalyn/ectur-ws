@@ -65,6 +65,14 @@ public class Catalogo implements Serializable{
 	public void setListaDetalleCatalogo(List<DetalleCatalogo> listaDetalleCatalogo) {
 		this.listaDetalleCatalogo = listaDetalleCatalogo;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	
 	

@@ -130,6 +130,18 @@ public class DetalleCatalogo implements Serializable{
 	public void setCatalogo(Catalogo catalogo) {
 		this.catalogo = catalogo;
 	}
+
+
+
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	
 }
